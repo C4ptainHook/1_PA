@@ -22,7 +22,7 @@ namespace NaturalMerging.Writers
             bufferedStream = new BufferedStream(fileStream, _fileBufferSize);
             streamWriter = new StreamWriter(bufferedStream);
         }
-        public void Write(string[] gen_buffer)
+        public void Write(object[] gen_buffer)
         {
             string content = string.Join("", gen_buffer);
             Task.Run(() => 
@@ -32,6 +32,17 @@ namespace NaturalMerging.Writers
                 writerMutex.ReleaseMutex();
             });
         }
+
+        public void Write(string content)
+        {
+            Task.Run(() =>
+            {
+                writerMutex.WaitOne();
+                streamWriter.Write(content);
+                writerMutex.ReleaseMutex();
+            });
+        }
+
         public void Dispose() 
         {
             streamWriter.Dispose();

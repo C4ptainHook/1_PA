@@ -10,7 +10,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NaturalMerging.Generators
 {
-    internal class IntegerCSV : IGenerator
+    internal class RecordGenerator : IGenerator
     {
         private Random _gen = new Random();
         private const int _genBufferSize = 200;
@@ -19,9 +19,9 @@ namespace NaturalMerging.Generators
         public int Lowerbound { get; set; }
         public int Upperbound { get; set; }
 
-        public IntegerCSV(string filename) => this.Filename = filename;
-        public IntegerCSV(string filename, long filesize) : this(filename) => this.Filesize = filesize;
-        public IntegerCSV(string filename, long filesize, int lowerbound, int upperbound) : this(filename, filesize) 
+        public RecordGenerator(string filename) => this.Filename = filename;
+        public RecordGenerator(string filename, long filesize) : this(filename) => this.Filesize = filesize;
+        public RecordGenerator(string filename, long filesize, int lowerbound, int upperbound) : this(filename, filesize) 
         {
             this.Lowerbound = lowerbound;
             this.Upperbound = upperbound;
@@ -37,7 +37,7 @@ namespace NaturalMerging.Generators
             {
                 for (int i = 0; i < gen_buffer.Length; i++)
                 {
-                    gen_buffer[i] = _gen.Next(Lowerbound, Upperbound).ToString() + ',';
+                    gen_buffer[i] = _gen.Next(Lowerbound, Upperbound).ToString() + '\n';
                 }
                 writer.Write(gen_buffer);
                 currentSize += _recordSize * _genBufferSize;
