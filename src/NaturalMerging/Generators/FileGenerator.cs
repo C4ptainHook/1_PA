@@ -24,7 +24,7 @@ namespace NaturalMerging.Generators
                 var recordGenerator = new RecordGenerator(writeBuffer, 1, 10000);
                 short recordSize = recordGenerator.RecordSize;
 
-                while (writer < Filesize)
+                while (writer.GetLength() < Filesize)
                 {
                     recordGenerator.Generate();
                     writer.WriteAsync(writeBuffer.ToString());

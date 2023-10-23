@@ -37,6 +37,10 @@ namespace NaturalMerging.Writers
                 writerMutex.ReleaseMutex();
             }
         }
+        public long GetLength()
+        {
+            return streamWriter.BaseStream.Length;
+        }
 
         public void Dispose()
         {
