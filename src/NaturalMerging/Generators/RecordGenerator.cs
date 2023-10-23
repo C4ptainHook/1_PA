@@ -27,7 +27,7 @@ namespace NaturalMerging.Generators
         { 
             while (!_buffer.IsFull)
             {
-                _buffer.Append(_gen.Next(Lowerbound, Upperbound));
+                _buffer.Append(_gen.Next(Lowerbound, Upperbound).ToString());
             }
         }
     }

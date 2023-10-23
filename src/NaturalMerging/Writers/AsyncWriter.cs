@@ -23,8 +23,9 @@ namespace NaturalMerging.Writers
             streamWriter = new StreamWriter(bufferedStream);
         }
 
-        public void Write(string content)
+        public void Write(Buffer generated_buf)
         {
+            string content = string.Join('\n', generated_buf);
             Task.Run(() =>
             {
                 writerMutex.WaitOne();

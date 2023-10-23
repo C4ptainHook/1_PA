@@ -9,7 +9,7 @@ namespace NaturalMerging
 {
     public class Buffer : IEnumerable
     {
-        private int[] Records;
+        private string[] Records;
         private int Current = 0;
         private int Size;
 
@@ -21,11 +21,11 @@ namespace NaturalMerging
         public Buffer(int capacity)
         {
             Capacity = capacity;
-            Records = new int[capacity];
+            Records = new string[capacity];
             Size = 0;
         }
 
-        public void Append(int record)
+        public void Append(string record)
         {
             if (IsFull) throw new Exception("Is not possible to append to a full buffer");
 
@@ -33,14 +33,14 @@ namespace NaturalMerging
             Size++;
         }
 
-        public int Peek()
+        public string Peek()
         {
             return Records[Current];
         }
  
-        public int Next()
+        public string Next()
         {
-            int record = Records[Current];
+            string record = Records[Current];
             Current++;
             if (IsFinished) Clear();
             return record;
@@ -51,11 +51,11 @@ namespace NaturalMerging
             Size = 0;
             Current = 0;
         }
-        public override string ToString()
-        {
-            //Span<int> FilledPart = Records;
-            return string.Join('\n', Records);
-        }
+        //public override string ToString()
+        //{
+        //    //Span<int> FilledPart = Records;
+        //    return string.Join('\n', Records);
+        //}
         public IEnumerator GetEnumerator()
         {
             for (int index = 0; index < Size; index++)
