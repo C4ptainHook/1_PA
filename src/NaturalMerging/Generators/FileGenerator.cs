@@ -15,21 +15,22 @@ namespace NaturalMerging.Generators
         public FileGenerator(string filename) => this.Filename = filename;
         public FileGenerator(string filename, long filesize) : this(filename) => this.Filesize = filesize;
 
-        public void Generate() 
+        public void Generate()
         {
             Buffer writeBuffer = new Buffer(Constants.GenBufferSize);
-            AsyncWriter writer = new AsyncWriter(Filename);
-            
+
+            using (AsyncWriter writer = new AsyncWriter(Filename))
+            {
                 var recordGenerator = new RecordGenerator(writeBuffer, 1, 10000);
                 short recordSize = recordGenerator.RecordSize;
-                long currentSize = 0;
-                while (currentSize < Filesize)
+
+                while (writer < Filesize)
                 {
                     recordGenerator.Generate();
-                    writer.Write(writeBuffer);
-                    currentSize += Constants.GenBufferSize * recordSize;
+                    writer.WriteAsync(writeBuffer.ToString());
+                    writeBuffer.Clear();
                 }
-            
+            } 
         }
     }
 }

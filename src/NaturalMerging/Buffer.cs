@@ -51,11 +51,10 @@ namespace NaturalMerging
             Size = 0;
             Current = 0;
         }
-        //public override string ToString()
-        //{
-        //    //Span<int> FilledPart = Records;
-        //    return string.Join('\n', Records);
-        //}
+        public override string ToString()
+        {
+            return string.Join('\n', Records);
+        }
         public IEnumerator GetEnumerator()
         {
             for (int index = 0; index < Size; index++)

@@ -8,7 +8,7 @@ namespace NaturalMerging
         public static void Main(string[] args)
         {
             Stopwatch stopwatch = new Stopwatch();
-            FileGenerator gen = new FileGenerator(@"C:\Users\boyko\Desktop\Generated.csv", 20000000000);
+            FileGenerator gen = new FileGenerator(@"C:\Users\boyko\Desktop\Generated.csv", 10);
             stopwatch.Start();
             gen.Generate();
             stopwatch.Stop();
