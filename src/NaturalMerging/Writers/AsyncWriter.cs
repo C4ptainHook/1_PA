@@ -12,25 +12,15 @@ namespace NaturalMerging.Writers
     internal class AsyncWriter: IDisposable
     {
         private static Mutex writerMutex = new Mutex();
-        private const int _fileBufferSize = 64000;
+
         FileStream fileStream;
         BufferedStream bufferedStream;
         StreamWriter streamWriter;
         public AsyncWriter(string filename)
         {
             fileStream = new FileStream(filename, FileMode.Create);
-            bufferedStream = new BufferedStream(fileStream, _fileBufferSize);
+            bufferedStream = new BufferedStream(fileStream, Constants.GenBufferSize);
             streamWriter = new StreamWriter(bufferedStream);
-        }
-        public void Write(object[] gen_buffer)
-        {
-            string content = string.Join("", gen_buffer);
-            Task.Run(() => 
-            {
-                writerMutex.WaitOne();
-                streamWriter.Write(content);
-                writerMutex.ReleaseMutex();
-            });
         }
 
         public void Write(string content)
