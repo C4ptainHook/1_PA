@@ -55,6 +55,7 @@ namespace NaturalMerging
         }
         public override string ToString()
         {
+            if (this.IsEmpty) throw new Exception("Attemp to stringify empty buffer");
             ReadOnlySpan<string> numeric = new ReadOnlySpan<string>(Records);
             return StringExtensions.Join('\n', numeric[..Size]);
         }
