@@ -1,7 +1,9 @@
-﻿using System;
+﻿using NaturalMerging.ExtensionMethods;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -53,7 +55,8 @@ namespace NaturalMerging
         }
         public override string ToString()
         {
-            return string.Join('\n', Records);
+            ReadOnlySpan<string> numeric = new ReadOnlySpan<string>(Records);
+            return StringExtensions.Join('\n', numeric[..Size]);
         }
         public IEnumerator GetEnumerator()
         {
