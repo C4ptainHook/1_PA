@@ -13,7 +13,6 @@ namespace NaturalMerging.Generators
     {
         private Random _gen = new Random();
         private Buffer _buffer;
-        public short RecordSize { get; private set; }
         private int Lowerbound;
         private int Upperbound;
         public RecordGenerator(Buffer buffer,int Lowerbound,int Upperbound) 
@@ -21,7 +20,6 @@ namespace NaturalMerging.Generators
             _buffer = buffer;
             this.Lowerbound = Lowerbound;
             this.Upperbound = Upperbound;
-            RecordSize = (short)(Math.Floor(Math.Log10(Upperbound) + 1) / 2 * sizeof(char));
         }
         public void Generate()
         { 
