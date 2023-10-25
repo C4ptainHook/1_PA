@@ -1,4 +1,4 @@
-﻿using NaturalMerging.Writers;
+﻿using NaturalMerging.FileAccessors;
 using System;
 using System.Collections.Generic;
 using System.IO;

@@ -6,10 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace NaturalMerging.Writers
+namespace NaturalMerging.FileAccessors
 {
 
-    internal class AsyncWriter : IDisposable
+    internal class Writer : IDisposable
     {
         private static Mutex writerMutex = new Mutex();
         private bool disposed = false;
@@ -18,9 +18,9 @@ namespace NaturalMerging.Writers
         BufferedStream bufferedStream;
         StreamWriter streamWriter;
 
-        public AsyncWriter(string filename)
+        public Writer(string filename)
         {
-            fileStream = new FileStream(filename, FileMode.Create);
+            fileStream = new FileStream(filename, FileMode.OpenOrCreate);
             bufferedStream = new BufferedStream(fileStream, Constants.GenBufferSize);
             streamWriter = new StreamWriter(bufferedStream);
         }

@@ -9,14 +9,13 @@ namespace NaturalMerging.Algorithm
 {
     internal class RecordSorter
     {
-        public void Distribute(FileStream mainFile, string AFile, string BFile)
+        private string AFile;
+        private string BFile;
+        private void Distribute(FileStream mainFile)
         {
-
-            
-            using (var reader = new StreamReader(mainFile)) 
-            {
-               
-            }
+           
+           
         }
+        public RecordSorter(string Filename) { }
     }
 }

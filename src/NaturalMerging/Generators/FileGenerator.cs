@@ -1,4 +1,4 @@
-﻿using NaturalMerging.Writers;
+﻿using NaturalMerging.FileAccessors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +19,7 @@ namespace NaturalMerging.Generators
         {
             Buffer writeBuffer = new Buffer(Constants.GenBufferSize);
 
-            using (AsyncWriter writer = new AsyncWriter(Filename))
+            using (Writer writer = new Writer(Filename))
             {
                 var recordGenerator = new RecordGenerator(writeBuffer, 1, 10000);
 
