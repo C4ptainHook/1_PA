@@ -19,20 +19,23 @@ namespace NaturalMerging.FileAccessors
             bufferedStream = new BufferedStream(fileStream, Constants.GenBufferSize);
             streamReader = new StreamReader(bufferedStream);
         }
-        public void ReadSerie(Buffer readBuffer) 
+        public bool ReadSerie(Buffer readBuffer) 
         {
             bool IsSerieFinished = false;
-            while (!IsSerieFinished)
+            if(!streamReader.EndOfStream)
             {
-                if(!streamReader.EndOfStream) {
+                while(!IsSerieFinished && !readBuffer.IsFull) {
                     string readRecord = streamReader.ReadLine().TrimEnd('\n');
-                    if (readBuffer.IsEmpty || int.Parse(readBuffer.Peek()) < int.Parse(readRecord)) 
-                    { 
-                        readBuffer.Append(readRecord); 
-                        readBuffer.Next(); 
+                    if (readBuffer.IsEmpty || int.Parse(readBuffer.Peek()) < int.Parse(readRecord))
+                    {
+                        readBuffer.Append(readRecord);
+                        readBuffer.Next();
                     }
-                } 
+                    else if(readBuffer.IsFull) IsSerieFinished = true;
+                }
+                return false;
             }
+            return true;
         }
 
         public void Dispose() 

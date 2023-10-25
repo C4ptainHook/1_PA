@@ -44,7 +44,7 @@ namespace NaturalMerging
         {
             string record = Records[Current];
             Current++;
-            if (IsFinished) Clear();
+            if (IsFinished) Current = 0;
             return record;
         }
 
