@@ -24,10 +24,9 @@ namespace NaturalMerging.FileAccessors
             bool EOR = false;
             int currentRecord;
             int nextRecord;
-            int reservedValue = int.Parse(readBuffer.PeekReserved());
-            if(int.MinValue < reservedValue)
+            if(int.MinValue < int.Parse(readBuffer.PeekReserved()))
             {
-                currentRecord = reservedValue;
+                currentRecord = int.Parse(readBuffer.PeekReserved());
                 readBuffer.Append(currentRecord.ToString());
             }
             else 
@@ -51,7 +50,11 @@ namespace NaturalMerging.FileAccessors
                     }
                     else break;
                 }
-                else EOR = true;
+                else 
+                { 
+                    EOR = true;
+                    break;
+                }
             }
 
             return EOR;

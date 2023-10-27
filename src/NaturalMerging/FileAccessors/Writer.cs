@@ -37,6 +37,11 @@ namespace NaturalMerging.FileAccessors
                 writerMutex.ReleaseMutex();
             }
         }
+
+        public void Write(string content)
+        {
+            streamWriter.Write(content);
+        }
         public long GetLength()
         {
             return streamWriter.BaseStream.Length;

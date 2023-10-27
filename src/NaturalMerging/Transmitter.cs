@@ -30,11 +30,11 @@ namespace NaturalMerging
             }
             else return new(EOR, true);
         }
-        public async void Write() 
+        public void Write() 
         {
             string currentSerie = buffer.ToString();
             buffer.Clear();
-            await writer.Value.WriteAsync(currentSerie);
+            writer.Value.Write(currentSerie);
         }
         public void Dispose()
         {
