@@ -25,16 +25,20 @@ namespace NaturalMerging.Algorithm
                 {
                     marker = mainFileBridge.PassRun();
                     if (!ToRight)
-                    {
                         AFileBridge.Write();
-                    }
                     else
-                    {
                         BFileBridge.Write();
-                    }
+
                     if (marker.Item1)
                         ToRight = !ToRight;
+
                 }while(!marker.Item2);
+
+                mainFileBridge.PassRun();
+                if (!ToRight)
+                    AFileBridge.Write();
+                else
+                    BFileBridge.Write();
             }
         }
         public void Sort() 

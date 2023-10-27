@@ -41,7 +41,7 @@ namespace NaturalMerging.FileAccessors
                 int.TryParse(streamReader.ReadLine(), out nextRecord);
                 readBuffer.Reserve(nextRecord.ToString());
                 int delta = currentRecord - nextRecord;
-                if (delta < 0)
+                if (delta <= 0)
                 {
                     if (!readBuffer.IsFull)
                     {
