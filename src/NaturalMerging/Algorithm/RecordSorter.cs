@@ -9,8 +9,8 @@ namespace NaturalMerging.Algorithm
 {
     internal class RecordSorter
     {
-        private string AFile;
-        private string BFile;
+        private string AFile = @"C:\Users\boyko\Desktop\AFile.csv";
+        private string BFile = @"C:\Users\boyko\Desktop\BFile.csv";
         private string fileName;
         private Buffer sharedBuffer;
         private void Distribute()
@@ -20,7 +20,8 @@ namespace NaturalMerging.Algorithm
             using (var AFileBridge = new Transmitter(AFile, sharedBuffer))
             using (var BFileBridge = new Transmitter(BFile, sharedBuffer))
             {
-                while (!mainFileBridge.ExtractAll())
+                Tuple<bool, bool> indicator;
+                while (!(indicator.Item1 = mainFileBridge.ExtractAll().Item1))
                 {
                     if (!ToRight)
                     {
@@ -32,6 +33,10 @@ namespace NaturalMerging.Algorithm
                     }
                 }
             }
+        }
+        public void Sort() 
+        {
+            Distribute();
         }
         public RecordSorter(string fileName) 
         {

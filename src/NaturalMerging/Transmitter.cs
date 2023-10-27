@@ -10,7 +10,6 @@ namespace NaturalMerging
 {
     internal class Transmitter : IDisposable
     {
-        private string fileName;
         private Buffer buffer;
         private Lazy<Writer> writer;
         private Lazy<Reader> reader;
@@ -18,18 +17,17 @@ namespace NaturalMerging
 
         public Transmitter(string fileName, Buffer buffer)
         {
-            this.fileName = fileName;
             this.buffer = buffer;
-            writer = new Lazy<Writer>();
-            reader = new Lazy<Reader>();
+            writer = new Lazy<Writer>(() => new Writer(fileName));
+            reader = new Lazy<Reader>(() => new Reader(fileName));
         }
-        public bool ExtractAll()
+        public (bool, bool) CopyRun()
         {
             try
             {
                 return reader.Value.ReadSerie(buffer);
             }
-            catch(Exception ex) { Console.WriteLine(ex.Message); return false; }
+            catch(Exception ex) { Console.WriteLine(ex.Message); return (true, false); }
         }
         public async void Write() 
         {

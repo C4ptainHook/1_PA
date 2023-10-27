@@ -39,12 +39,16 @@ namespace NaturalMerging
         {
             return Records[Current];
         }
+        public string PeekEnd()
+        {
+            return Records[Size-1];
+        }
  
         public string Next()
         {
+            if (IsFinished) Current = 0;
             string record = Records[Current];
             Current++;
-            if (IsFinished) Current = 0;
             return record;
         }
 
