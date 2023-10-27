@@ -21,13 +21,14 @@ namespace NaturalMerging
             writer = new Lazy<Writer>(() => new Writer(fileName));
             reader = new Lazy<Reader>(() => new Reader(fileName));
         }
-        public (bool, bool) CopyRun()
+        public Tuple<bool,bool> PassRun()
         {
-            try
+            bool EOR = reader.Value.CopyRun(buffer);
+            if (!reader.Value.IsUsed())
             {
-                return reader.Value.ReadSerie(buffer);
+                return new(EOR, false);
             }
-            catch(Exception ex) { Console.WriteLine(ex.Message); return (true, false); }
+            else return new(EOR, true);
         }
         public async void Write() 
         {

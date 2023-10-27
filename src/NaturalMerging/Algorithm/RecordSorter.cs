@@ -20,9 +20,10 @@ namespace NaturalMerging.Algorithm
             using (var AFileBridge = new Transmitter(AFile, sharedBuffer))
             using (var BFileBridge = new Transmitter(BFile, sharedBuffer))
             {
-                Tuple<bool, bool> indicator;
-                while (!(indicator.Item1 = mainFileBridge.ExtractAll().Item1))
+                Tuple<bool, bool> marker;
+                do
                 {
+                    marker = mainFileBridge.PassRun();
                     if (!ToRight)
                     {
                         AFileBridge.Write();
@@ -31,7 +32,9 @@ namespace NaturalMerging.Algorithm
                     {
                         BFileBridge.Write();
                     }
-                }
+                    if (marker.Item1)
+                        ToRight = !ToRight;
+                }while(!marker.Item2);
             }
         }
         public void Sort() 

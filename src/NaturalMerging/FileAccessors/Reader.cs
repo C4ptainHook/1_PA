@@ -19,21 +19,47 @@ namespace NaturalMerging.FileAccessors
             bufferedStream = new BufferedStream(fileStream, Constants.GenBufferSize);
             streamReader = new StreamReader(bufferedStream);
         }
-        public bool CopyRecord(Buffer readBuffer) 
+        public bool CopyRun(Buffer readBuffer) 
         {
             bool EOR = false;
-
-            while(!IsSerieFinished && !readBuffer.IsFinished) {
-                string readRecord = streamReader.ReadLine().TrimEnd('\n');
-                if (readBuffer.IsEmpty || int.Parse(readBuffer.Peek()) < int.Parse(readRecord))
-                {
-                    readBuffer.Append(readRecord);
-                    readBuffer.Next();
-                }
-                else IsSerieFinished = true;
+            int currentRecord;
+            int nextRecord;
+            int reservedValue = int.Parse(readBuffer.PeekReserved());
+            if(int.MinValue < reservedValue)
+            {
+                currentRecord = reservedValue;
+                readBuffer.Append(currentRecord.ToString());
             }
-        }
+            else 
+            {
+                int.TryParse(streamReader.ReadLine(), out currentRecord);
+                readBuffer.Append(currentRecord.ToString());
+            }
+           
 
+            while (streamReader.Peek() >= 0)
+            {
+                int.TryParse(streamReader.ReadLine(), out nextRecord);
+                readBuffer.Reserve(nextRecord.ToString());
+                int delta = currentRecord - nextRecord;
+                if (delta < 0)
+                {
+                    if (!readBuffer.IsFull)
+                    {
+                        readBuffer.Append(nextRecord.ToString());
+                        currentRecord = nextRecord;
+                    }
+                    else break;
+                }
+                else EOR = true;
+            }
+
+            return EOR;
+        }
+        public bool IsUsed()
+        {
+            return streamReader.Peek() <= 0;
+        }
         public void Dispose() 
         {
             Dispose(true);
