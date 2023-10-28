@@ -59,6 +59,27 @@ namespace NaturalMerging.FileAccessors
 
             return EOR;
         }
+
+        public Tuple<bool,bool> CopyRecord(Buffer readBuffer) 
+        {
+            bool EOR = false;
+            bool EOF = false;
+            if (streamReader.Peek() >= 0)
+            {
+                EOF = false;
+                string nextRecord = streamReader.ReadLine();
+                if (int.Parse(readBuffer.PeekReserved()) > int.Parse(nextRecord))
+                {
+                    EOR = true;
+                }
+                readBuffer.Reserve(nextRecord);
+            }
+            else 
+            {
+                EOF = true;
+            }
+            return new(EOR,EOF);
+        }
         public bool IsUsed()
         {
             return streamReader.Peek() <= 0;

@@ -21,6 +21,10 @@ namespace NaturalMerging
             writer = new Lazy<Writer>(() => new Writer(fileName));
             reader = new Lazy<Reader>(() => new Reader(fileName));
         }
+        public bool IsReadUsed()
+        {
+            return reader.Value.IsUsed();
+        }
         public Tuple<bool,bool> PassRun()
         {
             bool EOR = reader.Value.CopyRun(buffer);
@@ -29,6 +33,36 @@ namespace NaturalMerging
                 return new(EOR, false);
             }
             else return new(EOR, true);
+        }
+        public Tuple<bool, bool> PassRecord()
+        {
+            return reader.Value.CopyRecord(buffer);
+        }
+        public short CompareRecords()
+        {
+            int firstReserved = int.Parse(buffer.PeekReserved());
+            buffer.NextReserved();
+            int secondReserved = int.Parse(buffer.PeekReserved());
+            buffer.ClearReservedMarker();
+
+            if (firstReserved <= secondReserved)
+            {
+                buffer.Append(firstReserved.ToString());
+                if (buffer.IsFull)
+                {
+                    Write();
+                }
+                return 0;
+            }
+            else
+            {
+                buffer.Append(secondReserved.ToString());
+                if (buffer.IsFull)
+                {
+                    Write();
+                }
+                return 1;
+            }
         }
         public void Write() 
         {
