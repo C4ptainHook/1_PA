@@ -12,23 +12,27 @@ namespace NaturalMerging
     public class Buffer : IEnumerable
     {
         private string[] Records;
-        private int CurrentGeneral = 0;
-        private int CurrentReserved;
+        private string[] Reserved;
+        private int CurrentReserved = 0;
         private int Size;
-        private int ReservedSpace = 1;
+        private int ReservedSpace;
 
         public int Capacity { get; private set; }
         public bool IsFull { get => Size == Capacity; }
-        public bool IsFinished { get => CurrentGeneral == Size; }
+        public bool IsReservedFinished { get => CurrentReserved == ReservedSpace; }
         public bool IsEmpty { get => Size == 0; }
 
-        public Buffer(int capacity)
+        public Buffer(int capacity, int reservedCapacity)
         {
             Capacity = capacity;
-            Records = new string[capacity + ReservedSpace];
-            CurrentReserved = Capacity;
-            Records[CurrentReserved] = int.MinValue.ToString();
+            ReservedSpace = reservedCapacity;
+            Records = new string[capacity];
+            Reserved = new string[reservedCapacity];
             Size = 0;
+            for(int i = 0; i < ReservedSpace; i++) 
+            {
+                Reserved[i] = int.MinValue.ToString();
+            }
         }
 
         public void Append(string record)
@@ -38,42 +42,34 @@ namespace NaturalMerging
             Records[Size] = record;
             Size++;
         }
-
-        public string Peek()
+        public void Reserve(string record)
         {
-            return Records[CurrentGeneral];
-        }
-   
-        public string Next()
-        {
-            if (IsFinished) CurrentGeneral = 0;
-            string record = Records[CurrentGeneral];
-            CurrentGeneral++;
-            return record;
+            Reserved[CurrentReserved] = record;
         }
 
-        public void Reserve(string record) 
+        public void NextReserved()
         {
-            Records[CurrentReserved] = record;
+            if (IsReservedFinished) throw new Exception("Is not possible to outbreak reserve capacity");
+            CurrentReserved++;
         }
 
         public string PeekReserved()
         {
-            return Records[CurrentReserved];
+            return Reserved[CurrentReserved];
         }
 
         public void Clear()
         {
             Size = 0;
         }
-        public void ClearMarker()
+        public void ClearReservedMarker()
         {
-            CurrentGeneral = 0;
+            CurrentReserved = 0;
         }
         public void ClearAll()
         {
             Clear();
-            ClearMarker();
+            ClearReservedMarker();
         }
 
         public override string ToString()

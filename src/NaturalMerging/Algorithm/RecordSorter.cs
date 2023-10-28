@@ -35,14 +35,15 @@ namespace NaturalMerging.Algorithm
                 }while(!marker.Item2);
             }
         }
+        public RecordSorter(string fileName)
+        {
+            this.fileName = fileName;
+            sharedBuffer = new Buffer(Constants.GenBufferSize,1);
+        }
+
         public void Sort() 
         {
             Distribute();
-        }
-        public RecordSorter(string fileName) 
-        {
-            this.fileName = fileName;
-            sharedBuffer = new Buffer(Constants.GenBufferSize);
         }
     }
 }

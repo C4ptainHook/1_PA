@@ -17,7 +17,7 @@ namespace NaturalMerging.Generators
 
         public void Generate()
         {
-            Buffer writeBuffer = new Buffer(Constants.GenBufferSize);
+            Buffer writeBuffer = new Buffer(Constants.GenBufferSize,0);
 
             using (Writer writer = new Writer(Filename))
             {
