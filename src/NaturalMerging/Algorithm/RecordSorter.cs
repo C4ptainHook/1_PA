@@ -33,12 +33,6 @@ namespace NaturalMerging.Algorithm
                         ToRight = !ToRight;
 
                 }while(!marker.Item2);
-
-                mainFileBridge.PassRun();
-                if (!ToRight)
-                    AFileBridge.Write();
-                else
-                    BFileBridge.Write();
             }
         }
         public void Sort() 

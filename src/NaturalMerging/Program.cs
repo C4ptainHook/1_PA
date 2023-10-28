@@ -17,7 +17,6 @@ namespace NaturalMerging
             //Console.WriteLine(timeSpan.TotalSeconds);
 
             RecordSorter rgen = new RecordSorter(@"C:\Users\boyko\Desktop\Generated.csv");
-            //RecordSorter rgen = new RecordSorter(@"C:\Users\boyko\Desktop\Sklyar.txt");
             stopwatch.Start();
             rgen.Sort();
             stopwatch.Stop();
