@@ -57,6 +57,8 @@ namespace NaturalMerging.Algorithm
                 }
                 while (!FAE && !FBE)
                 {
+                    AER = false;
+                    BER = false;
                     switch (mainFileBridge.CompareRecords(false)) 
                     {
                         case 0: 
@@ -100,16 +102,20 @@ namespace NaturalMerging.Algorithm
 
                 while(!FAE && FBE)
                 {
-                    bridgeResponse = AFileBridge.PassRun();
+                    sharedBuffer.ClearReservedMarker();
+                    mainFileBridge.CompareRecords(true);
+                    bridgeResponse = AFileBridge.PassRecord();
                     FAE = bridgeResponse.Item2;
-                    mainFileBridge.Write();
                 }
                 while (FAE && !FBE)
                 {
-                    bridgeResponse = BFileBridge.PassRun();
+                    bool IsCaretMoved = false;
+                    if (!IsCaretMoved) { sharedBuffer.NextReserved(); }
+                    mainFileBridge.CompareRecords(true);
+                    bridgeResponse = BFileBridge.PassRecord();
                     FBE = bridgeResponse.Item2;
-                    mainFileBridge.Write();
                 }
+                if(!sharedBuffer.IsEmpty) mainFileBridge.Write();
             }
         }
 
