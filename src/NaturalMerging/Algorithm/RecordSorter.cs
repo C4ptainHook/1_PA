@@ -80,8 +80,8 @@ namespace NaturalMerging.Algorithm
 
                     while (!AER && BER)
                     {
-                        bridgeResponse = AFileBridge.PassRecord();
                         mainFileBridge.CompareRecords(true);
+                        bridgeResponse = AFileBridge.PassRecord();
                         AER = bridgeResponse.Item1;
                         FAE = bridgeResponse.Item2;
                     }
@@ -89,8 +89,8 @@ namespace NaturalMerging.Algorithm
                     {
                         bool IsCaretMoved = false;
                         if (!IsCaretMoved) {sharedBuffer.NextReserved();}
-                        bridgeResponse = BFileBridge.PassRecord();
                         mainFileBridge.CompareRecords(true);
+                        bridgeResponse = BFileBridge.PassRecord();
                         sharedBuffer.ClearReservedMarker();
                         BER = bridgeResponse.Item1;
                         FBE = bridgeResponse.Item2;
