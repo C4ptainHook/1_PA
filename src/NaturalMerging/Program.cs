@@ -9,14 +9,14 @@ namespace NaturalMerging
         public static void Main(string[] args)
         {
             Stopwatch stopwatch = new Stopwatch();
-            //FileGenerator gen = new FileGenerator(@"C:\Users\boyko\Desktop\Generated.csv", 100000);
+            //FileGenerator gen = new FileGenerator(@"C:\Users\boyko\Desktop\Generated.csv", 10000000);
             //stopwatch.Start();
             //gen.Generate();
             //stopwatch.Stop();
             //TimeSpan timeSpan = TimeSpan.FromMilliseconds(stopwatch.ElapsedMilliseconds);
             //Console.WriteLine(timeSpan.TotalSeconds);
 
-            RecordSorter rgen = new RecordSorter(@"C:\Users\boyko\Desktop\Generated.txt");
+            RecordSorter rgen = new RecordSorter(@"C:\Users\boyko\Desktop\Generated.csv");
             stopwatch.Start();
             rgen.Sort();
             stopwatch.Stop();

@@ -123,8 +123,7 @@
 
         public void Sort()
         {
-            Console.WriteLine("Runs in Merge\n"+Merge() + '\n' ); 
-            //Distribute();
+
         }
     }
 }
