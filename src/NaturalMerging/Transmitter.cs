@@ -38,8 +38,19 @@ namespace NaturalMerging
         {
             return reader.Value.CopyRecord(buffer);
         }
-        public short CompareRecords()
+        public short CompareRecords(bool IsForced)
         {
+            if (IsForced)
+            {
+                int currentReserved = int.Parse(buffer.PeekReserved());
+                buffer.Append(currentReserved.ToString());
+                if (buffer.IsFull)
+                {
+                    Write();
+                }
+                return -1;
+            }
+
             int firstReserved = int.Parse(buffer.PeekReserved());
             buffer.NextReserved();
             int secondReserved = int.Parse(buffer.PeekReserved());
@@ -62,7 +73,7 @@ namespace NaturalMerging
                     Write();
                 }
                 return 1;
-            }
+            }  
         }
         public void Write() 
         {

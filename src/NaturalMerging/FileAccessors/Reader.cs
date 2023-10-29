@@ -63,7 +63,7 @@ namespace NaturalMerging.FileAccessors
         public Tuple<bool,bool> CopyRecord(Buffer readBuffer) 
         {
             bool EOR = false;
-            bool EOF = false;
+            bool EOF;
             if (streamReader.Peek() >= 0)
             {
                 EOF = false;
@@ -77,6 +77,7 @@ namespace NaturalMerging.FileAccessors
             else 
             {
                 EOF = true;
+                EOR = true;
             }
             return new(EOR,EOF);
         }

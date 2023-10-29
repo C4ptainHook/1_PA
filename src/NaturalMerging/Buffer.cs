@@ -19,7 +19,7 @@ namespace NaturalMerging
 
         public int Capacity { get; private set; }
         public bool IsFull { get => Size == Capacity; }
-        public bool IsReservedFinished { get => CurrentReserved == ReservedSpace-1; }
+        public bool IsReservedFinished { get => CurrentReserved == ReservedSpace; }
         public bool IsEmpty { get => Size == 0; }
 
         public Buffer(int capacity, int reservedCapacity)

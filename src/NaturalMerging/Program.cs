@@ -16,7 +16,7 @@ namespace NaturalMerging
             //TimeSpan timeSpan = TimeSpan.FromMilliseconds(stopwatch.ElapsedMilliseconds);
             //Console.WriteLine(timeSpan.TotalSeconds);
 
-            RecordSorter rgen = new RecordSorter(@"C:\Users\boyko\Desktop\Generated.csv");
+            RecordSorter rgen = new RecordSorter(@"C:\Users\boyko\Desktop\Generated.txt");
             stopwatch.Start();
             rgen.Sort();
             stopwatch.Stop();
