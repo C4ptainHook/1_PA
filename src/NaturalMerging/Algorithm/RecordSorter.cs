@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NaturalMerging.Algorithm
+﻿namespace NaturalMerging.Algorithm
 {
     internal class RecordSorter
     {
@@ -33,10 +26,10 @@ namespace NaturalMerging.Algorithm
                     if (marker.Item1)
                         ToRight = !ToRight;
 
-                }while(!marker.Item2);
+                } while (!marker.Item2);
             }
         }
-        private void Merge() 
+        private void Merge()
         {
             sharedBuffer = new Buffer(Constants.GenBufferSize, 2);
             using (var mainFileBridge = new Transmitter(fileName, sharedBuffer))
@@ -59,9 +52,9 @@ namespace NaturalMerging.Algorithm
                 {
                     AER = false;
                     BER = false;
-                    switch (mainFileBridge.CompareRecords(false)) 
+                    switch (mainFileBridge.CompareRecords(false))
                     {
-                        case 0: 
+                        case 0:
                             {
                                 bridgeResponse = AFileBridge.PassRecord();
                                 AER = bridgeResponse.Item1;
@@ -77,7 +70,7 @@ namespace NaturalMerging.Algorithm
                                 FBE = bridgeResponse.Item2;
                                 break;
                             }
-                        
+
                     }
 
                     while (!AER && BER)
@@ -89,8 +82,7 @@ namespace NaturalMerging.Algorithm
                     }
                     while (AER && !BER)
                     {
-                        bool IsCaretMoved = false;
-                        if (!IsCaretMoved) {sharedBuffer.NextReserved();}
+                        sharedBuffer.NextReserved();
                         mainFileBridge.CompareRecords(true);
                         bridgeResponse = BFileBridge.PassRecord();
                         sharedBuffer.ClearReservedMarker();
@@ -100,7 +92,7 @@ namespace NaturalMerging.Algorithm
                 }
                 mainFileBridge.Write();
 
-                while(!FAE && FBE)
+                while (!FAE && FBE)
                 {
                     sharedBuffer.ClearReservedMarker();
                     mainFileBridge.CompareRecords(true);
@@ -109,13 +101,13 @@ namespace NaturalMerging.Algorithm
                 }
                 while (FAE && !FBE)
                 {
-                    bool IsCaretMoved = false;
-                    if (!IsCaretMoved) { sharedBuffer.NextReserved(); }
+                    sharedBuffer.NextReserved();
                     mainFileBridge.CompareRecords(true);
                     bridgeResponse = BFileBridge.PassRecord();
+                    sharedBuffer.ClearReservedMarker();
                     FBE = bridgeResponse.Item2;
                 }
-                if(!sharedBuffer.IsEmpty) mainFileBridge.Write();
+                if (!sharedBuffer.IsEmpty) mainFileBridge.Write();
             }
         }
 
@@ -124,7 +116,7 @@ namespace NaturalMerging.Algorithm
             this.fileName = fileName;
         }
 
-        public void Sort() 
+        public void Sort()
         {
             Merge();
             //Distribute();
