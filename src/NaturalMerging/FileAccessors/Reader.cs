@@ -13,9 +13,9 @@ namespace NaturalMerging.FileAccessors
         private BufferedStream bufferedStream;
         private StreamReader streamReader;
         private bool disposed = false;
-        public Reader(string filename)
+        public Reader(string filename, FileMode mode)
         {
-            fileStream = new FileStream(filename, FileMode.Open);
+            fileStream = new FileStream(filename, mode);
             bufferedStream = new BufferedStream(fileStream, Constants.GenBufferSize);
             streamReader = new StreamReader(bufferedStream);
         }

@@ -15,11 +15,11 @@ namespace NaturalMerging
         private Lazy<Reader> reader;
         private bool disposed;
 
-        public Transmitter(string fileName, Buffer buffer)
+        public Transmitter(string fileName, Buffer buffer, FileMode mode)
         {
             this.buffer = buffer;
-            writer = new Lazy<Writer>(() => new Writer(fileName));
-            reader = new Lazy<Reader>(() => new Reader(fileName));
+            writer = new Lazy<Writer>(() => new Writer(fileName, mode));
+            reader = new Lazy<Reader>(() => new Reader(fileName, mode));
         }
         public bool IsReadUsed()
         {

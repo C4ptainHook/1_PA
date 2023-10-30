@@ -18,9 +18,9 @@ namespace NaturalMerging.FileAccessors
         BufferedStream bufferedStream;
         StreamWriter streamWriter;
 
-        public Writer(string filename)
+        public Writer(string filename, FileMode mode)
         {
-            fileStream = new FileStream(filename, FileMode.OpenOrCreate);
+            fileStream = new FileStream(filename, mode);
             bufferedStream = new BufferedStream(fileStream, Constants.GenBufferSize);
             streamWriter = new StreamWriter(bufferedStream);
         }

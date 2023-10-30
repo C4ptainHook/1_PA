@@ -19,7 +19,7 @@ namespace NaturalMerging.Generators
         {
             Buffer writeBuffer = new Buffer(Constants.GenBufferSize,0);
 
-            using (Writer writer = new Writer(Filename))
+            using (Writer writer = new Writer(Filename, FileMode.Create))
             {
                 var recordGenerator = new RecordGenerator(writeBuffer, 1, 10000);
 

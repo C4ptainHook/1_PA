@@ -10,9 +10,9 @@
         {
             sharedBuffer = new Buffer(Constants.GenBufferSize, 1);
             bool ToRight = false;
-            using (var mainFileBridge = new Transmitter(fileName, sharedBuffer))
-            using (var AFileBridge = new Transmitter(AFile, sharedBuffer))
-            using (var BFileBridge = new Transmitter(BFile, sharedBuffer))
+            using (var mainFileBridge = new Transmitter(fileName, sharedBuffer, FileMode.Open))
+            using (var AFileBridge = new Transmitter(AFile, sharedBuffer, FileMode.Create))
+            using (var BFileBridge = new Transmitter(BFile, sharedBuffer, FileMode.Create))
             {
                 Tuple<bool, bool> marker;
                 do
@@ -33,9 +33,9 @@
         {
             int numberOfRuns = 0;
             sharedBuffer = new Buffer(Constants.GenBufferSize, 2);
-            using (var mainFileBridge = new Transmitter(fileName, sharedBuffer))
-            using (var AFileBridge = new Transmitter(AFile, sharedBuffer))
-            using (var BFileBridge = new Transmitter(BFile, sharedBuffer))
+            using (var mainFileBridge = new Transmitter(fileName, sharedBuffer, FileMode.Create))
+            using (var AFileBridge = new Transmitter(AFile, sharedBuffer, FileMode.Open))
+            using (var BFileBridge = new Transmitter(BFile, sharedBuffer, FileMode.Open))
             {
                 bool FAE = AFileBridge.IsReadUsed();
                 bool FBE = BFileBridge.IsReadUsed();
@@ -75,6 +75,9 @@
 
                         }
 
+                        if(AER || BER)
+                            numberOfRuns++;
+
                         while (!AER && BER)
                         {
                             mainFileBridge.CompareRecords(true);
@@ -91,7 +94,6 @@
                             BER = bridgeResponse.Item1;
                             FBE = bridgeResponse.Item2;
                         }
-                        numberOfRuns++;
                     }
                     mainFileBridge.Write();
             }
@@ -129,7 +131,12 @@
 
         public void Sort()
         {
-
+            int numberOfRuns = int.MaxValue;
+            while(numberOfRuns > 1)
+            {
+                Distribute();
+                numberOfRuns = Merge();
+            }
         }
     }
 }
