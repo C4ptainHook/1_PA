@@ -101,7 +101,10 @@
                 sharedBuffer.ClearReservedMarker();
                 mainFileBridge.CompareRecords(true);
                 bridgeResponse = AFileBridge.PassRecord();
+                AER = bridgeResponse.Item1;
                 FAE = bridgeResponse.Item2;
+                    if (AER)
+                        numberOfRuns++;
             }
             while (FAE && !FBE)
             {
@@ -109,8 +112,11 @@
                 mainFileBridge.CompareRecords(true);
                 bridgeResponse = BFileBridge.PassRecord();
                 sharedBuffer.ClearReservedMarker();
+                BER = bridgeResponse.Item1;
                 FBE = bridgeResponse.Item2;
-            }
+                    if (BER)
+                        numberOfRuns++;
+                }
             if (!sharedBuffer.IsEmpty) mainFileBridge.Write();
             }
             return numberOfRuns;
