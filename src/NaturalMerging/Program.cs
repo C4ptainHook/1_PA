@@ -8,19 +8,26 @@ namespace NaturalMerging
     {
         public static void Main(string[] args)
         {
-            Stopwatch stopwatch = new Stopwatch();
-            //FileGenerator gen = new FileGenerator(@"C:\Users\boyko\Desktop\Generated.csv", 10000000);
-            //stopwatch.Start();
-            //gen.Generate();
-            //stopwatch.Stop();
-            //TimeSpan timeSpan = TimeSpan.FromMilliseconds(stopwatch.ElapsedMilliseconds);
-            //Console.WriteLine(timeSpan.TotalSeconds);
+            bool generate = false;
 
+            Stopwatch stopwatch = new Stopwatch();
+            TimeSpan timeSpan;
+            if (generate)
+            {
+                FileGenerator gen = new FileGenerator(@"C:\Users\boyko\Desktop\Generated.csv", 1000000000);
+                stopwatch.Start();
+                gen.Generate();
+                stopwatch.Stop();
+                timeSpan = TimeSpan.FromMilliseconds(stopwatch.ElapsedMilliseconds);
+                Console.WriteLine(timeSpan.TotalSeconds);
+            }
+
+            stopwatch.Reset();
             RecordSorter rgen = new RecordSorter(@"C:\Users\boyko\Desktop\Generated.csv");
             stopwatch.Start();
             rgen.Sort();
             stopwatch.Stop();
-            TimeSpan timeSpan = TimeSpan.FromMilliseconds(stopwatch.ElapsedMilliseconds);
+            timeSpan = TimeSpan.FromMilliseconds(stopwatch.ElapsedMilliseconds);
             Console.WriteLine(timeSpan.TotalSeconds);
         }
     }
