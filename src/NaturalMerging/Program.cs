@@ -14,7 +14,7 @@ namespace NaturalMerging
             TimeSpan timeSpan;
             if (generate)
             {
-                FileGenerator gen = new FileGenerator(@"C:\Users\boyko\Desktop\Generated.csv", 1000000000);
+                FileGenerator gen = new FileGenerator(@"C:\Users\boyko\Desktop\Generated.csv", 1200000000);
                 stopwatch.Start();
                 gen.Generate();
                 stopwatch.Stop();

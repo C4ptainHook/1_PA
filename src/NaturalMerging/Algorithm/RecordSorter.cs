@@ -6,6 +6,44 @@
         private string BFile = @"C:\Users\boyko\Desktop\BFile.csv";
         private string fileName;
         private Buffer sharedBuffer;
+        private static void PreSort(string inputFile, int maxMB)
+        {
+            const string tempFile = "temp_preSort";
+            long bytes = 1024L * 1024L * maxMB;  // Use long for accurate calculations
+            int[] array = new int[bytes / sizeof(int)];
+            StreamReader reader = new StreamReader(inputFile);
+            StreamWriter writer = new StreamWriter(tempFile);
+            while (!reader.EndOfStream)
+            {
+                int numElements = 0;
+                // Read and fill the array with data up to the specified limit
+                while (numElements * sizeof(int) < bytes && !reader.EndOfStream)
+                {
+                    int num;
+                    if (int.TryParse(reader.ReadLine(), out num))
+                    {
+                        array[numElements] = num;
+                        numElements++;
+                    }
+                }
+
+                // Sort the data in the array
+                Array.Sort(array, 0, numElements);
+
+                // Write the sorted data to the temp file
+
+                for (int i = 0; i < numElements; i++)
+                {
+                    writer.WriteLine(array[i]);
+                }
+            }
+            reader.Close();
+            writer.Close();
+            // Move the temp file to the input file
+            File.Delete(inputFile);
+            File.Move(tempFile, inputFile);
+        }
+
         private void Distribute()
         {
             sharedBuffer = new Buffer(Constants.GenBufferSize, 1);
@@ -131,6 +169,7 @@
 
         public void Sort()
         {
+            PreSort(fileName, 100);
             int numberOfRuns = int.MaxValue;
             while(numberOfRuns > 1)
             {
